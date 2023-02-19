@@ -1,4 +1,4 @@
-NAME	:= wolfhechel/jupyterlab
+NAME	:= wolfhechel/datalab
 TAG		:= $$(git rev-parse --short HEAD)
 IMG		:= ${NAME}:${TAG}
 LATEST	:= ${NAME}:latest

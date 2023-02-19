@@ -1,0 +1,16 @@
+openpyxl
+tqdm
+seaborn
+opencv-python
+camelot-py[base]
+pymupdf
+nltk
+spacy
+flair
+geopy
+geopandas
+fiona
+geojson
+sentinelsat
+folium
+rasterio

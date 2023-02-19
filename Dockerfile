@@ -10,31 +10,15 @@ RUN apt-get update --yes && \
 
 USER ${NB_UID}
 
-RUN mamba install --yes -c conda-forge \
-    'gdal' \
-    'ghostscript' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+COPY --chown=${NB_UID}:${NB_GID} *-packages.txt /tmp/
 
-RUN pip install --no-cache-dir \
-    openpyxl \
-    tqdm \
-    seaborn \
-    opencv-python \
-    camelot-py[base] \
-    pymupdf \
-    nltk \
-    spacy \
-    flair \
-    geopy \
-    geopandas \
-    fiona \
-    geojson \
-    sentinelsat \
-    folium \
-    rasterio && \
-    fix-permissions "${CONDA_DIR}" && \
+RUN mamba install --yes \
+    -c conda-forge \
+    --file /tmp/conda-packages.txt && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}"
+
+RUN pip install --no-cache-dir -r /tmp/pip-packages.txt && \
     fix-permissions "/home/${NB_USER}"
 
 COPY jupyter_server_config.py /etc/jupyter/
